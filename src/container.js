@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import "./index.css";
-import Mars from "./mars";
+import Mars from "./components/mars";
 
 class Container extends Component {
 
@@ -11,19 +11,13 @@ class Container extends Component {
         initialPoint: '00N'
     };
 
-    addCommand = (e) => {
+    giveCommands = (e) => {
         this.setState({
             commands: this.state.commands + e.target.value
         })
     };
 
-    runSample = (e) => {
-        this.setState({
-            commands: e.target.value
-        });
-    };
-
-    execute = () => {
+    commandsExecuting = () => {
         let initialPoint = this.startInput.value;
         if (/^[0-4][0-4][NEWS]$/.test(initialPoint)) {
             this.setState({
@@ -49,7 +43,7 @@ class Container extends Component {
         e.target.checkValidity();
     };
 
-    stopExecute = () => {
+    stopExecution = () => {
         this.setState({
             execute: false
         });
@@ -65,7 +59,7 @@ class Container extends Component {
                     position={position}
                     commands={this.state.executingCommands}
                     execute={this.state.execute}
-                    onDone={this.stopExecute}
+                    onDone={this.stopExecution}
                 />
                 <div className={`control-panel`}>
                     <div className={'initial-point'}>
@@ -87,25 +81,14 @@ class Container extends Component {
                         />
                     </div>
                     <div className='commands'>
-                        <button value='L' onClick={this.addCommand}>Left</button>
-                        <button value='R' onClick={this.addCommand}>Right</button>                        
-                        <button value='M' onClick={this.addCommand}>Move</button>
+                        <button value='L' onClick={this.giveCommands}>Left</button>
+                        <button value='R' onClick={this.giveCommands}>Right</button>                        
+                        <button value='M' onClick={this.giveCommands}>Move</button>
                     </div>
                     <div className='execution'>
                         <input type="text" readOnly value={this.state.commands}/>
-                        <button className={'cta'} onClick={this.execute}>Execute</button>
+                        <button className={'cta'} onClick={this.commandsExecuting}>Execute</button>
                         <button onClick={this.clearInput} className='clear-input'>Clear</button>
-                    </div>
-                    <div className='samples'>
-                        <label>Sample: </label>
-                        <ul>
-                            <li>
-                                <button value={'MMRMMLMMRM'} onClick={this.runSample}>MMRMMLMMRM</button>
-                            </li>
-                            <li>
-                                <button value={'RMMMLMRMLM'} onClick={this.runSample}>RMMMLMRMLM</button>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>

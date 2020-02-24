@@ -26,7 +26,7 @@ class Mars extends React.Component {
 
     initialState = {
         start: null,
-        position: "0-0",
+        position: "0,0",
         end: null,
         ops: [],        
         facing: "N",
@@ -60,8 +60,8 @@ class Mars extends React.Component {
             const parts = position.split(" ");
             this.setState(
                 {
-                    start: parts[0] + "-" + parts[1],
-                    position: parts[0] + "-" + parts[1],
+                    start: parts[0] + "," + parts[1],
+                    position: parts[0] + "," + parts[1],
                     facing: parts[2]
                 },
                 () => {
@@ -119,14 +119,14 @@ class Mars extends React.Component {
         const {size} = this.props;
         const {position, facing} = this.state;
         const moveVector = CARDINAL_DIRECTION[facing];
-        const pos = position.split('-').map(Number);
+        const pos = position.split(',').map(Number);
         const x = pos[0] + moveVector[0];
         const y = pos[1] + moveVector[1];
         if (x < 0 || x >= size || y < 0 || y >= size) {
             return {error: true};
         }
         return {
-            position: x + '-' + y
+            position: x + ',' + y
         };
     };
 
@@ -152,7 +152,7 @@ class Mars extends React.Component {
         let cells = [];
         for (let i = size - 1; i >= 0; i--) {
             for (let j = 0; j < size; j++) {
-                cells.push(j + "-" + i);
+                cells.push(j + "," + i);
             }
         }
         return (
